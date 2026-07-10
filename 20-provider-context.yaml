@@ -33,6 +33,30 @@ spec:
           stsUrl: https://seaweedfs-{{ .Release.namespace }}.{{ .Context.ingress.suffix }}
           consoleUrl: https://seaweedfs-console-{{ .Release.namespace }}.{{ .Context.ingress.suffix }}
 
+    # -- Native Google Cloud Storage provider contract. Point a service's storage.provider at this to run on GCS.
+    # -- Credential vending is handled by Polaris via the default GCP credentials chain (ADC), fed by one of the
+    # -- auth.mode options below. Swap the placeholder region/project/service-account values for your environment.
+    gcsStorage:
+      provider:
+        type: gcs
+        name: GoogleCloudStorage
+        region: europe-west1          # GCP location of the bucket
+        project: my-gcp-project
+        endpoints:
+          apiUrl: https://storage.googleapis.com
+        auth:
+          # -- How the Polaris server obtains GCP credentials. One of: json-key | workload-identity | wif
+          mode: workload-identity
+          # -- workload-identity / wif: the GCP service account to bind (GKE) or impersonate. Also set on the
+          #    catalog storageConfigInfo (gcpServiceAccount) when principal attribution/impersonation is used.
+          gcpServiceAccount: polaris-sa@my-gcp-project.iam.gserviceaccount.com
+          # -- json-key / wif: secret holding the credential file. The whole secret is mounted at /gcp,
+          #    and keyFileKey is both the secret key and the mounted file name that
+          #    GOOGLE_APPLICATION_CREDENTIALS points to (e.g. key.json for a SA key, wif.json for a WIF config).
+          credentialsSecret:
+            name: creds-polaris-gcs
+            keyFileKey: key.json
+
     # -- OIDC identity provider contract. The sandbox binds it to Keycloak, but any OIDC provider exposing these endpoints can be plugged in.
     defaultIdp:
       provider:

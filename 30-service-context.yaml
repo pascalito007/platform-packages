@@ -208,9 +208,12 @@ spec:
           usernameKey: username
           passwordKey: password
       storage:
+        # Point at any storage provider from the provider context.
+        #   - defaultStorage (type: s3)  -> S3/SeaweedFS, uses credentialsSecret below
+        #   - gcsStorage     (type: gcs) -> native GCS, credentials come from the provider's auth block
         provider: defaultStorage
-        # The access key is used for STS interactions between Polaris and S3 (sts:AssumeRole)
-        # + catalog-side Iceberg metadata ops
+        # S3 only: the access key is used for STS interactions between Polaris and S3 (sts:AssumeRole)
+        # + catalog-side Iceberg metadata ops. Ignored when the selected provider is GCS.
         # The Polaris SeaweedFS identity for STS
         credentialsSecret:
           name: creds-polaris-s3
@@ -257,6 +260,7 @@ spec:
         # ENFORCE_PRINCIPAL_CREDENTIAL_ROTATION_REQUIRED_CHECKING: false
         SUPPORTED_CATALOG_STORAGE_TYPES:
           - S3
+          - GCS
         realmOverrides: {}
         # my-realm:
         #   ENFORCE_PRINCIPAL_CREDENTIAL_ROTATION_REQUIRED_CHECKING: true

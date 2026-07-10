@@ -555,6 +555,20 @@ spec:
                   stsUnavailable: false
                   region: "dummy"
                   roleArn: "arn:aws:iam::000000000000:role/S3WriteRole"
+
+              # -- Native GCS catalog example. Use this shape when polaris.storage.provider is bound to
+              #    a GCS provider (type: gcs). Credential vending is handled by the Polaris server via
+              #    ADC (see the gcsStorage provider auth.mode). gcpServiceAccount is optional and used for
+              #    service-account impersonation / principal attribution when configured.
+              # - name: gold
+              #   type: INTERNAL
+              #   properties:
+              #     default-base-location: gs://my-gold-bucket/
+              #   storageConfigInfo:
+              #     storageType: GCS
+              #     allowedLocations:
+              #       - "gs://my-gold-bucket/"
+              #     gcpServiceAccount: polaris-sa@my-gcp-project.iam.gserviceaccount.com
             catalogRoles:
               # Polaris example roles:
               # - Catalog readers: read-only access to tables in the catalog
