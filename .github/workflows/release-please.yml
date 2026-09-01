@@ -35,7 +35,7 @@ jobs:
 
   release-please:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'OKDP'
+    if: github.repository_owner == 'pascalito007'
     outputs:
       # JSON array of the package directories released by this run, "[]" when
       # this push only updated the release pull request.
@@ -73,7 +73,7 @@ jobs:
     with:
       ci_registry: "ghcr.io"
       registry: "quay.io"
-      publish_to_registry: "true"
+      publish_to_registry: "false"
       # release-please has just minted versions that have never existed, so a
       # tag already being on the registry means something is genuinely wrong.
       on_existing_tag: "fail"
