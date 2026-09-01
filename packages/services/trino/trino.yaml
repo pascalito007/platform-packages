@@ -21,7 +21,7 @@ name: trino
 tag: 1.0.0 # x-release-please-version
 protected: false
 description: |
-  Apache Trino - Distributed SQL query engine designed for large-scale data processing across multiple data sources.
+  Apache Trino (fork test) - Distributed SQL query engine designed for large-scale data processing across multiple data sources.
   High-performance, in-memory query engine that enables fast, interactive analytics on diverse data systems.
   Supports querying data from multiple databases, data warehouses, and big data platforms in a single query.
 usage:
